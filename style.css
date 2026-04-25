@@ -1,0 +1,133 @@
+:root {
+    --bg-top: #050b16;
+    --bg-mid: #0d1a32;
+    --bg-bottom: #121f3c;
+    --accent-cyan: #7cefff;
+    --accent-orange: #ff9b54;
+    --glass-line: rgba(146, 236, 255, 0.42);
+    --glass-fill: rgba(10, 19, 36, 0.55);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    font-family: 'Space Grotesk', sans-serif;
+    color: #e8f3ff;
+    background:
+        radial-gradient(circle at 12% 18%, rgba(69, 198, 255, 0.22) 0, rgba(69, 198, 255, 0) 42%),
+        radial-gradient(circle at 84% 82%, rgba(255, 158, 76, 0.22) 0, rgba(255, 158, 76, 0) 46%),
+        linear-gradient(165deg, var(--bg-top) 0%, var(--bg-mid) 45%, var(--bg-bottom) 100%);
+}
+
+body::before,
+body::after {
+    content: '';
+    position: fixed;
+    inset: -20vmax;
+    pointer-events: none;
+    z-index: -1;
+}
+
+body::before {
+    background: conic-gradient(from 180deg, rgba(95, 241, 255, 0.1), rgba(255, 180, 101, 0.08), rgba(85, 205, 255, 0.1));
+    filter: blur(24px);
+    animation: driftA 28s ease-in-out infinite alternate;
+}
+
+body::after {
+    background:
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.04) 0, rgba(255, 255, 255, 0.04) 1px, transparent 1px, transparent 90px),
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.035) 0, rgba(255, 255, 255, 0.035) 1px, transparent 1px, transparent 90px);
+    opacity: 0.12;
+    transform: perspective(600px) rotateX(55deg) translateY(32vh);
+}
+
+#game-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+    overflow: hidden;
+    border: none;
+    background: var(--glass-fill);
+    backdrop-filter: none;
+    box-shadow:
+        0 10px 30px rgba(1, 8, 23, 0.25),
+        0 0 0 1px rgba(141, 236, 255, 0.12) inset,
+        0 0 48px rgba(89, 216, 255, 0.12);
+}
+
+#game-container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(140deg, rgba(140, 234, 255, 0.1) 0%, rgba(255, 165, 95, 0.08) 52%, rgba(140, 234, 255, 0) 100%);
+    mix-blend-mode: screen;
+    animation: driftB 14s ease-in-out infinite alternate;
+}
+
+#uni-logo-overlay {
+    position: fixed;
+    top: 18px;
+    left: 18px;
+    z-index: 30;
+    width: clamp(138px, 18vw, 240px);
+    max-height: 108px;
+    padding: 10px 16px;
+    background: rgba(8, 19, 36, 0.78);
+    border: 1px solid rgba(132, 235, 255, 0.65);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(1, 8, 23, 0.35);
+    backdrop-filter: blur(3px);
+    pointer-events: none;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 180ms ease, transform 180ms ease, visibility 0s linear 180ms;
+}
+
+#uni-logo-overlay.logo-hidden {
+    opacity: 0;
+    transform: translateY(-6px);
+    visibility: hidden;
+}
+
+@keyframes driftA {
+    from {
+        transform: translate(-2%, -1%) scale(1);
+    }
+    to {
+        transform: translate(2%, 2%) scale(1.08);
+    }
+}
+
+@keyframes driftB {
+    from {
+        transform: translateY(-2%);
+        opacity: 0.5;
+    }
+    to {
+        transform: translateY(2%);
+        opacity: 0.85;
+    }
+}
+
+@media (max-width: 900px) {
+    #game-container {
+        box-shadow:
+            0 0 0 1px rgba(141, 236, 255, 0.08) inset,
+            0 0 90px rgba(89, 216, 255, 0.16);
+    }
+}
